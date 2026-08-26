@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Sister!</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,600&family=Dancing+Script:wght@700&family=Kalam:wght@400;700&family=Chewy&family=Caveat:wght@700&display=swap" rel="stylesheet">
+    
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background-color: #1a1a1a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'Kalam', cursive;
+            overflow: hidden;
+        }
+
+        .card-wrapper {
+            width: 95vw;
+            max-width: 1000px;
+            aspect-ratio: 16 / 9; 
+            background-color: #fff;
+            background-image: 
+                linear-gradient(45deg, #cc9494 25%, transparent 25%, transparent 75%, #cc9494 75%, #cc9494),
+                linear-gradient(45deg, #cc9494 25%, transparent 25%, transparent 75%, #cc9494 75%, #cc9494);
+            background-size: 24px 24px;
+            background-position: 0 0, 12px 12px;
+            padding: 15px;
+            border-radius: 30px;
+            box-shadow: 0px 20px 50px rgba(0,0,0,0.8);
+            position: relative;
+        }
+
+        .card-inner {
+            width: 100%;
+            height: 100%;
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            background-color: #F8F1E5;
+        }
+
+        .screen {
+            display: none; 
+            position: absolute; 
+            top: 0; left: 0; 
+            width: 100%; height: 100%;
+            background-color: #F8F1E5; 
+            z-index: 10;
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center;
+            text-align: center;
+        }
+        
+        .screen.active { display: flex; }
+
+        .title-serif { font-family: 'Playfair Display', serif; color: #A91B1B; font-weight: 600; margin-bottom: 5px; }
+        .title-script { font-family: 'Dancing Script', cursive; color: #333; margin-bottom: 5px; line-height: 1; }
+        p { font-size: 18px; color: #444; line-height: 1.5; }
+
+        .btn-group { display: flex; gap: 20px; margin-top: 15px; z-index: 105; }
+        button {
+            background-color: #A91B1B; color: white; font-family: 'Chewy', cursive;
+            font-size: 24px; padding: 8px 30px; border: none; border-radius: 20px;
+            cursor: pointer; box-shadow: 0px 4px 0px #6d1010; transition: all 0.1s ease;
+        }
+        button:hover { transform: translateY(2px); box-shadow: 0px 2px 0px #6d1010; }
+
+        .back-btn {
+            position: absolute; top: 20px; left: 20px; font-size: 16px; color: white;
+            background: #A91B1B; padding: 5px 15px; border-radius: 20px; cursor: pointer;
+            font-family: 'Kalam', cursive; z-index: 110; box-shadow: 0px 3px 0px #6d1010;
+        }
+
+        .heart-next {
+            position: absolute; right: 0px; top: 50%; transform: translateY(-50%);
+            background-color: #ffc9d2; color: #A91B1B; width: 60px; height: 50px;
+            border-radius: 30px 0 0 30px; display: flex; align-items: center; justify-content: center;
+            font-family: 'Chewy', cursive; font-size: 16px; cursor: pointer;
+            box-shadow: -2px 3px 10px rgba(0,0,0,0.1); transition: 0.2s; z-index: 110;
+        }
+        .heart-next:hover { width: 75px; background-color: #ffb1be; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        .floating { animation: float 3s ease-in-out infinite; }
+
+        /* SCREEN 4 FIXES */
+        .gift-img { width: 140px; cursor: pointer; transition: transform 0.2s; filter: drop-shadow(0px 8px 6px rgba(0,0,0,0.25)); margin: 0 10px;}
+        .gift-img:hover { transform: scale(1.15) rotate(3deg); }
+        .s4-arrow { position: absolute; right: 40px; font-size: 55px; color: #A91B1B; font-weight: 900; font-family: sans-serif; cursor: pointer; transition: 0.2s; filter: drop-shadow(2px 3px 2px rgba(0,0,0,0.2)); }
+        .s4-arrow:hover { transform: scale(1.2); }
+        .s4-dancing-shinchan { position: absolute; bottom: 20px; left: 30px; height: 160px; z-index: 15; object-fit: contain; }
+
+        /* ========================================= */
+        /* ✨ SCREEN 5 - BEAUTIFIED ✨               */
+        /* ========================================= */
+        
+        /* Softened, larger corner blobs to fill the empty cream space naturally */
+        .s5-blob-tl { position: absolute; top: 0; left: 0; width: 300px; height: 300px; background: #A91B1B; border-radius: 0 0 300px 0; z-index: 1; opacity: 0.15; }
+        .s5-blob-br { position: absolute; bottom: 0; right: 0; width: 400px; height: 350px; background: #A91B1B; border-radius: 400px 0 0 0; z-index: 1; opacity: 0.15; }
+        
+        /* Floating festive sparkles for decoration */
+        .s5-sparkle { position: absolute; color: #A91B1B; z-index: 5; opacity: 0.7; font-family: sans-serif; }
+
+        /* Pushed the text wrap slightly to make room for the Rakhi */
+        .s5-text-wrap { position: absolute; top: 52%; left: 8%; transform: translateY(-50%); width: 45%; text-align: left; z-index: 10; padding-top: 20px; }
+        
+        /* Adjusted Rakhi so it doesn't cross over the word HAPPY */
+        .s5-rakhi { position: absolute; top: -155px; left: -155px; width: 400px !important; height: auto !important; max-height: 200px !important; transform: rotate(-15deg); object-fit: contain; z-index: 15; filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.2)); }
+        
+        .s5-ribbon { background: #A91B1B; color: white; display: inline-block; padding: 6px 40px; font-family: 'Chewy'; font-size: 26px; margin-top: 15px; position: relative; box-shadow: 2px 4px 0px #6d1010; }
+        .s5-ribbon::before, .s5-ribbon::after { content: ""; position: absolute; top: 0; border: 20px solid #A91B1B; }
+        .s5-ribbon::before { left: -20px; border-left-color: transparent; }
+        .s5-ribbon::after { right: -20px; border-right-color: transparent; }
+        
+        .s5-polaroid-wrap { position: absolute; top: 5%; right: 10%; transform: translateY(-50%); width: 290px; height: 290px; z-index: 10; }
+        .s5-polaroid-back { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #8b1313; transform: rotate(-6deg); z-index: 1; box-shadow: 3px 5px 15px rgba(0,0,0,0.4); }
+        .s5-polaroid-front { position: absolute; top: 10px; left: -10px; width: 100%; height: 100%; background: #A91B1B; padding: 12px; padding-bottom: 40px; transform: rotate(4deg); z-index: 2; box-shadow: 2px 5px 10px rgba(0,0,0,0.2); }
+        .s5-polaroid-front .main-photo { width: 100%; height: 100%; object-fit: cover; border: 2px solid #555; }
+        .s5-pin { position: absolute; top: -35px; right: 0px; width: 50px !important; height: auto !important; max-height: 50px !important; z-index: 15; transform: rotate(15deg); object-fit: contain; border: none !important; background: transparent !important; }
+        .s5-shinchan { position: absolute; bottom: 0px; right: 2%; height: 200px !important; width: auto !important; max-height: 200px !important; z-index: 15; object-fit: contain;}
+
+        /* SCREEN 7 FIXES */
+        .s7-ransom { display: flex; gap: 6px; font-weight: bold; margin-bottom: 10px; z-index: 10; margin-top: 30px; }
+        .s7-ransom span { padding: 4px 10px; box-shadow: 2px 3px 6px rgba(0,0,0,0.2); font-size: 55px; display: inline-block; line-height: 1.1;}
+        .r-red { background: #d02c2c; color: white; font-family: 'Dancing Script', cursive; transform: rotate(-4deg); }
+        .r-cream { background: #fdf5e6; color: #d02c2c; font-family: 'Playfair Display', serif; transform: rotate(3deg); border: 1px solid #ccc; }
+        .r-pink { background: #ff99a8; color: white; font-family: 'Chewy', cursive; transform: rotate(-2deg); }
+        .r-white { background: #fff; color: #d02c2c; font-family: 'Kalam', cursive; transform: rotate(4deg); border: 1px solid #ddd; }
+        .r-star { color: #d02c2c; font-size: 30px; margin-top: 15px; margin-left: 10px; }
+
+        .clothesline-wrapper { position: relative; width: 95%; height: 280px; margin-top: 20px; }
+        .s7-curve-string { position: absolute; top: -50px; left: 0%; width: 100%; height: 60px; border-bottom: 2px solid #a33b3b; border-radius: 50%; z-index: 1; }
+        .s7-light { position: absolute; width: 14px; height: 18px; background: #fff4cc; border-radius: 50% 50% 40% 40%; box-shadow: 0px 0px 12px 5px rgba(255, 235, 59, 0.7); z-index: 2; }
+        .l1 { top: 30px; left: 15%; transform: rotate(-10deg); }
+        .l2 { top: 58px; left: 38%; transform: rotate(5deg); }
+        .l3 { top: 55px; left: 62%; transform: rotate(-5deg); }
+        .l4 { top: 25px; left: 85%; transform: rotate(10deg); }
+        .s7-polaroids { display: flex; justify-content: space-evenly; width: 100%; padding-top: 25px; z-index: 5; position: relative; }
+        
+        .s7-card {
+            background-color: white;
+            background-image: 
+                repeating-linear-gradient(45deg, rgba(200, 50, 50, 0.5) 25%, transparent 25%, transparent 75%, rgba(200, 50, 50, 0.5) 75%, rgba(200, 50, 50, 0.5)),
+                repeating-linear-gradient(45deg, rgba(200, 50, 50, 0.5) 25%, transparent 25%, transparent 75%, rgba(200, 50, 50, 0.5) 75%, rgba(200, 50, 50, 0.5));
+            background-size: 14px 14px; background-position: 0 0, 7px 7px;
+            padding: 6px; width: 150px; box-shadow: 3px 5px 12px rgba(0,0,0,0.3); position: relative;
+        }
+        .s7-card-inner { background: white; padding: 4px; padding-bottom: 25px; height: 100%; width: 100%; border: 1px solid #eee;}
+        .s7-card-inner img { width: 100%; height: 200px; object-fit: cover; }
+        .s7-clip { position: absolute; top: -20px; left: 50%; transform: translateX(-50%); width: 14px; height: 35px; background: #e0ac78; border: 1px solid #b08253; border-radius: 3px; z-index: 10; box-shadow: 1px 2px 4px rgba(0,0,0,0.2); }
+        .s7-clip::after { content: ''; position: absolute; top: 0; left: 50%; height: 100%; width: 1px; background: #b08253; }
+        .deco-bow { position: absolute; width: 40px; z-index: 15; filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.2)); }
+        .b1 { top: 40px; left: 5%; transform: rotate(-20deg); }
+        .b2 { top: 60px; left: 45%; transform: rotate(15deg); }
+        .b3 { top: 45px; right: 18%; transform: rotate(-10deg); }
+        .deco-camera { position: absolute; bottom: 20px; left: 30px; width: 70px; filter: drop-shadow(2px 3px 5px rgba(0,0,0,0.3)); z-index: 15;}
+        .deco-flower { position: absolute; bottom: 15px; left: 32%; width: 60px; z-index: 15; transform: rotate(15deg); filter: drop-shadow(2px 2px 3px rgba(0,0,0,0.2));}
+        
+        .s7-next-arrow { position: absolute; bottom: 20px; right: 30px; font-size: 45px; color: #A91B1B; cursor: pointer; font-weight: 900; font-family: sans-serif; transition: transform 0.2s; text-shadow: 2px 2px 0px rgba(0,0,0,0.2); z-index: 20;}
+        .s7-next-arrow:hover { transform: scale(1.2); }
+
+        /* SCREEN 8 FIXES */
+        .s8-center-gif { position: center; top: 55%; left: 50%; transform: translate(-50%, -50%); max-width: 400px !important; max-height: 280px !important; width: auto; height: auto; object-fit: contain; z-index: 5; }
+        .mindmap-trait { position: absolute; font-family: 'Kalam', cursive; color: #A91B1B; font-size: 18px; font-weight: bold; background: white; padding: 6px 15px; border-radius: 20px; box-shadow: 2px 4px 10px rgba(0,0,0,0.1); z-index: 10; white-space: nowrap; }
+        .trait-1 { top: 22%; left: 12%; transform: rotate(-4deg); }
+        .trait-2 { top: 50%; left: 5%; transform: translateY(-50%) rotate(3deg); }
+        .trait-3 { top: 75%; left: 18%; transform: rotate(-2deg); }
+        .trait-4 { top: 25%; right: 12%; transform: rotate(4deg); }
+        .trait-5 { top: 50%; right: 5%; transform: translateY(-50%) rotate(-3deg); }
+        .trait-6 { top: 85%; right: 18%; transform: rotate(2deg); } 
+
+        /* ========================================================================= */
+        /* TEXT ANIMATIONS */
+        /* ========================================================================= */
+
+        .screen h1, .screen h2, .screen p, .screen .s5-ribbon, .screen svg text, .screen .s7-ransom span, .screen .mindmap-trait, .screen .s5-sparkle {
+            opacity: 0;
+        }
+        
+        .s7-ransom span { position: relative; } 
+
+        @keyframes trackingIn { 0% { letter-spacing: -0.5em; opacity: 0; transform: scale(0.9); } 100% { letter-spacing: normal; opacity: 1; transform: scale(1); } }
+        @keyframes popIn { 0% { opacity: 0; transform: scale(0.4); } 70% { transform: scale(1.15); opacity: 1; } 100% { opacity: 1; transform: scale(1); } }
+        @keyframes shakeAngry { 0% { opacity: 0; transform: scale(3); color: #fff; } 20% { opacity: 1; transform: scale(1); color: #ff0000; } 30%, 50%, 70%, 90% { transform: translateX(-15px) rotate(-3deg); color: #ff0000; } 40%, 60%, 80% { transform: translateX(15px) rotate(3deg); color: #A91B1B; } 100% { opacity: 1; transform: translateX(0); color: #A91B1B; } }
+        @keyframes bounceInUp { 0% { opacity: 0; transform: translateY(60px); } 60% { opacity: 1; transform: translateY(-15px); } 80% { transform: translateY(10px); } 100% { opacity: 1; transform: translateY(0); } }
+        @keyframes slideInLeft { 0% { opacity: 0; transform: translateX(-60px); } 100% { opacity: 1; transform: translateX(0); } }
+        @keyframes slideInRight { 0% { opacity: 0; transform: translateX(60px); } 100% { opacity: 1; transform: translateX(0); } }
+        @keyframes fadeInUp { 0% { opacity: 0; transform: translateY(30px); } 100% { opacity: 1; transform: translateY(0); } }
+        @keyframes dropInRotate { 0% { opacity: 0; transform: translateY(-60px) rotate(-20deg); } 100% { opacity: 1; transform: translateY(0) rotate(0deg); } }
+        @keyframes slowReveal { 0% { opacity: 0; filter: blur(10px); } 100% { opacity: 1; filter: blur(0); } }
+        @keyframes dropInRelative { 0% { opacity: 0; top: -50px; } 60% { opacity: 1; top: 15px; } 80% { top: -5px; } 100% { opacity: 1; top: 0px; } }
+        @keyframes simpleFade { 0% { opacity: 0; } 100% { opacity: 1; } }
+
+        /* Applying animations */
+        #screen-1.active .title-serif { animation: trackingIn 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; }
+        #screen-1.active h2 { animation: popIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.5s forwards; }
+        #screen-2.active .title-serif { animation: shakeAngry 0.8s forwards; }
+        #screen-3.active .title-serif { animation: bounceInUp 0.8s ease-out forwards; }
+        #screen-4.active svg text { animation: simpleFade 1.2s ease-in forwards; }
+        #screen-4.active h2 { animation: slideInRight 0.8s ease-out 0.4s forwards; }
+
+        #screen-5.active h2 { animation: slideInLeft 0.7s ease-out forwards; }
+        #screen-5.active .title-script { animation: popIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.3s forwards; }
+        #screen-5.active p { animation: fadeInUp 0.8s ease-out 0.6s forwards; }
+        #screen-5.active .s5-ribbon { animation: dropInRotate 0.6s ease-out 1s forwards; }
+        /* Make sparkles fade in smoothly */
+        #screen-5.active .s5-sparkle { animation: simpleFade 1s forwards, float 3s ease-in-out infinite; }
+
+        #screen-6.active .title-serif { animation: trackingIn 0.9s ease-out forwards; }
+        #screen-6.active p:first-of-type { animation: simpleFade 0.8s ease-out 0.5s forwards; }
+        #screen-6.active .title-script { animation: popIn 0.9s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.8s forwards; }
+        #screen-6.active p:last-of-type { animation: slowReveal 1.2s ease-out 1.2s forwards; }
+
+        #screen-7.active .s7-ransom span { animation: dropInRelative 0.6s ease-out forwards; }
+        #screen-7.active .s7-ransom span:nth-child(1) { animation-delay: 0.1s; }
+        #screen-7.active .s7-ransom span:nth-child(2) { animation-delay: 0.2s; }
+        #screen-7.active .s7-ransom span:nth-child(3) { animation-delay: 0.3s; }
+        #screen-7.active .s7-ransom span:nth-child(4) { animation-delay: 0.4s; }
+        #screen-7.active .s7-ransom span:nth-child(5) { animation-delay: 0.5s; }
+        #screen-7.active .s7-ransom span:nth-child(6) { animation-delay: 0.6s; }
+        #screen-7.active .s7-ransom span:nth-child(7) { animation-delay: 0.7s; }
+        #screen-7.active .s7-ransom span:nth-child(8) { animation-delay: 0.8s; }
+        #screen-7.active .s7-ransom .r-star { animation: popIn 0.5s ease-out 1.2s forwards; }
+
+        #screen-8.active .title-serif { animation: trackingIn 0.8s ease-out forwards; }
+        #screen-8.active .mindmap-trait { animation: simpleFade 0.6s forwards, float 3s ease-in-out infinite; }
+        #screen-8.active .trait-1 { animation-delay: 0.2s, 0.2s; }
+        #screen-8.active .trait-2 { animation-delay: 0.5s, 0.5s; }
+        #screen-8.active .trait-3 { animation-delay: 0.8s, 0.8s; }
+        #screen-8.active .trait-4 { animation-delay: 0.3s, 0.3s; }
+        #screen-8.active .trait-5 { animation-delay: 0.6s, 0.6s; }
+        #screen-8.active .trait-6 { animation-delay: 0.9s, 0.9s; }
+
+        #screen-9.active .title-script { animation: fadeInUp 0.9s ease-out forwards; }
+        #screen-9.active p { animation: slowReveal 1.5s ease-out 0.5s forwards; }
+
+    </style>
+</head>
+<body>
+
+<div class="card-wrapper">
+    <div class="card-inner">
+
+        <!-- Screen 1: Intro -->
+        <div class="screen active" id="screen-1" style="display: flex;">
+            <h1 class="title-serif" style="font-size: 45px;">I have made something for you</h1>
+            <img src="https://media.giphy.com/media/LOEgEYZHyGbXY8KgA3/giphy.gif" alt="Shinchan Sticker" class="floating" style="height: 180px; margin: 20px 0;">
+            <h2 style="color: #A91B1B; font-family: 'Chewy', cursive; font-size: 32px;">Do you wanna see it?</h2>
+            <div class="btn-group">
+                <button onclick="goTo(3)">YES</button>
+                <button onclick="goTo(2)">NO</button>
+            </div>
+        </div>
+
+        <!-- Screen 2: Angry -->
+        <div class="screen" id="screen-2">
+            <h1 class="title-serif" style="font-size: 55px;">HOW DARE YOU!?</h1>
+            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3h5YXh4bTR4Ynh4bDR4b2J4bTF4N3I0ZzM3NjExMXhxNnE2cSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/SqNWXTC1bozoOdhiIR/giphy.gif" alt="Angry Sticker" class="floating" style="height: 220px; margin: 20px 0;">
+            <div class="btn-group"><button onclick="goTo(1)">TRY AGAIN</button></div>
+        </div>
+
+        <!-- Screen 3: Excited -->
+        <div class="screen" id="screen-3">
+            <h1 class="title-serif" style="font-size: 50px;">Are you really excited?</h1>
+            <img src="https://media.giphy.com/media/ZcthNRpghDfqieTcsm/giphy.gif" alt="Excited Sticker" class="floating" style="height: 220px; margin: 20px 0;">
+            <div class="btn-group">
+                <button onclick="goTo(4)">YES</button>
+                <button onclick="goTo(4)">YES</button>
+            </div>
+        </div>
+
+        <!-- Screen 4: Gifts -->
+        <div class="screen" id="screen-4">
+            <svg viewBox="0 0 600 120" style="width: 80%; height: auto; overflow: visible; margin-bottom: 20px;">
+                <path id="curve" d="M 0,110 Q 300,-10 600,110" fill="transparent"></path>
+                <text width="600">
+                    <textPath href="#curve" startOffset="50%" text-anchor="middle" style="font-family: 'Chewy', cursive; font-size: 40px; fill: #A91B1B;">
+                        Each gift has something for you..
+                    </textPath>
+                </text>
+            </svg>
+
+            <div style="display: flex; gap: 40px; justify-content: center; align-items: center; position: relative; width: 150%; margin-bottom: 50px;">
+                <img src="https://static.vecteezy.com/system/resources/previews/069/096/717/non_2x/modern-detailed-professional-high-quality-pink-gift-box-with-transparent-background-free-png.png" class="gift-img floating" onclick="goTo(6)" alt="Gift 1">
+                <img src="https://static.vecteezy.com/system/resources/previews/069/096/717/non_2x/modern-detailed-professional-high-quality-pink-gift-box-with-transparent-background-free-png.png" class="gift-img floating" style="animation-delay: 0.2s;" onclick="goTo(5)" alt="Gift 2">
+                <img src="https://static.vecteezy.com/system/resources/previews/069/096/717/non_2x/modern-detailed-professional-high-quality-pink-gift-box-with-transparent-background-free-png.png" class="gift-img floating" style="animation-delay: 0.4s;" onclick="goTo(7)" alt="Gift 3">
+                
+                <div class="s4-arrow" onclick="goTo(5)">❯</div>
+            </div>
+            
+            <h2 style="color: #A91B1B; font-family: 'Chewy'; font-size: 38px; letter-spacing: 2px;">CLICK ON THE GIFTS</h2>
+
+            <img src="https://media.tenor.com/-RYUs_Icgw4AAAAi/crayon-shin-chan-crayon-shin-chan-dance.gif" alt="Dancing Shinchan" class="s4-dancing-shinchan">
+        </div>
+
+        <!-- ========================================================= -->
+        <!-- SCREEN 5: HAPPY RAKSHABANDHAN (Festive & Filled!)         -->
+        <!-- ========================================================= -->
+        <div class="screen" id="screen-5">
+            <div class="back-btn" onclick="goTo(4)">❮ Gifts</div>
+            
+            <!-- Soft red watercolor background blobs -->
+            <div class="s5-blob-tl"></div>
+            <div class="s5-blob-br"></div>
+
+            <!-- Festive Floating Sparkles -->
+            <div class="s5-sparkle" style="top: 15%; left: 45%; font-size: 35px; animation-delay: 0.1s;">✦</div>
+            <div class="s5-sparkle" style="top: 25%; right: 45%; font-size: 20px; animation-delay: 0.5s;">★</div>
+            <div class="s5-sparkle" style="bottom: 25%; left: 40%; font-size: 45px; animation-delay: 0.3s;">✨</div>
+            <div class="s5-sparkle" style="bottom: 15%; left: 10%; font-size: 25px; animation-delay: 0.7s;">✦</div>
+
+            <div class="s5-text-wrap">
+                <!-- Rakhi icon pushed up and out of the way -->
+                <img src="https://png.pngtree.com/png-clipart/20250102/original/pngtree-vector-illustration-of-decorative-rakhi-png-image_18634867.png" alt="Rakhi Icon" class="s5-rakhi floating">
+                
+                <h2 style="color: #A91B1B; font-family: 'Playfair Display'; font-size: 28px; margin-bottom: -15px; font-weight: 800; letter-spacing: 2px;">HAPPY</h2>
+                <h1 class="title-script" style="color: #A91B1B; font-size: 70px;">Rakshabandhan</h1>
+                <p style="font-size: 16px; font-weight: bold; color: #555; margin-top: 10px;">Here's to more laughs, random fights, inside jokes, and all the sibling chaos!</p>
+                <div class="s5-ribbon">Didii</div>
+            </div>
+
+            <div class="s5-polaroid-wrap floating" style="animation-delay: 0.5s;">
+                <div class="s5-polaroid-back"></div>
+                <div class="s5-polaroid-front">
+                    <img src="images/ChatGPT Image Aug 25, 2026, 02_34_33 PM(1).png" alt="Sister Photo" class="main-photo">
+                    <img src="https://cdn-icons-png.flaticon.com/512/3238/3238018.png" class="s5-pin" alt="Pin">
+                </div>
+            </div>
+            
+            <img src="https://media.tenor.com/Rm4M00jy2QQAAAAi/crayon-shinchan.gif" alt="Shinchan" class="s5-shinchan">
+            
+            <div class="heart-next" onclick="goTo(9)">more<br>></div>
+        </div>
+
+        <!-- Screen 6: Best Sister -->
+        <div class="screen" id="screen-6" style="padding: 40px;">
+            <div class="back-btn" onclick="goTo(4)">❮ Gifts</div>
+            <h1 class="title-serif" style="font-size: 55px; margin-top: 20px;">Best Sister Award</h1>
+            <p style="margin-bottom: 5px;">this award is presented to:</p>
+            <h1 class="title-script" style="font-size: 70px; margin-top: 5px;">Divyamshi Koppu</h1>
+            <hr style="width: 70%; border: 1px solid #ccc; margin: 15px auto;">
+            <p style="width: 85%; font-weight: bold; margin: 15px auto;">You are the most precious person I have ever had. I just wanna say thank you for being into my life, listening to all my rants and being there when I needed you the most.</p>
+            <div style="display: flex; justify-content: space-between; align-items: flex-end; width: 100%; margin-top: 10px;">
+                <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3h5YXh4bTR4Ynh4bDR4b2J4bTF4N3I0ZzM3NjExMXhxNnE2cSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/Kg3HasthERrpfpGc6r/giphy.gif" alt="Shinchan" class="floating" style="height: 150px; border: 3px solid white; border-radius: 10px;">
+                <img src="https://png.pngtree.com/png-vector/20230624/ourmid/pngtree-circle-best-award-badge-in-red-gold-color-with-paddy-symbol-vector-png-image_7313382.png" alt="Ribbon" style="width: 100px; margin-bottom: 30px;">
+                <div style="width: 150px;"></div> 
+            </div>
+            <div class="heart-next" onclick="goTo(8)">more<br>></div>
+        </div>
+
+        <!-- Screen 7: Memories -->
+        <div class="screen" id="screen-7">
+            <div class="back-btn" onclick="goTo(4)">❮ Gifts</div>
+            
+            <div class="s7-ransom">
+                <span class="r-red">m</span>
+                <span class="r-cream">E</span>
+                <span class="r-red" style="font-family: 'Playfair Display', serif; transform: rotate(1deg);">M</span>
+                <span class="r-cream" style="border-radius: 5px;">o</span>
+                <span class="r-red" style="font-family: 'Playfair Display', serif; transform: rotate(-2deg);">r</span>
+                <span class="r-white">i</span>
+                <span class="r-pink" style="font-family: sans-serif; transform: rotate(3deg);">E</span>
+                <span class="r-cream" style="font-family: sans-serif; font-weight: normal;">S</span>
+                <div class="r-star">✦</div>
+            </div>
+            
+            <div class="clothesline-wrapper">
+                <div class="s7-curve-string">
+                    <div class="s7-light l1"></div>
+                    <div class="s7-light l2"></div>
+                    <div class="s7-light l3"></div>
+                    <div class="s7-light l4"></div>
+                </div>
+
+                <img src="https://gallery.yopriceville.com/var/albums/Free-Clipart-Pictures/Ribbons-and-Banners-PNG/Red_Bow_Deco_PNG_Clipart.png?m=1629810834" class="deco-bow b1" alt="Bow">
+                <img src="https://gallery.yopriceville.com/var/albums/Free-Clipart-Pictures/Ribbons-and-Banners-PNG/Red_Bow_Deco_PNG_Clipart.png?m=1629810834" class="deco-bow b2" alt="Bow">
+                <img src="https://gallery.yopriceville.com/var/albums/Free-Clipart-Pictures/Ribbons-and-Banners-PNG/Red_Bow_Deco_PNG_Clipart.png?m=1629810834" class="deco-bow b3" alt="Bow">
+
+                <div class="s7-polaroids">
+                    <div class="s7-card floating" style="transform: rotate(-3deg); top: 30px; animation-delay: 0.1s;">
+                        <div class="s7-clip"></div>
+                        <div class="s7-card-inner"><img src="images/WhatsApp Image 2026-08-25 at 3.08.03 PM.jpeg" alt="Pic1"></div>
+                    </div>
+                    <div class="s7-card floating" style="transform: rotate(2deg); top: 0px; animation-delay: 0.3s;">
+                        <div class="s7-clip"></div>
+                        <div class="s7-card-inner"><img src="images/WhatsApp Image 2026-08-25 at 3.08.53 PM.jpeg" alt="Pic2"></div>
+                    </div>
+                    <div class="s7-card floating" style="transform: rotate(-4deg); top: 40px; animation-delay: 0.5s;">
+                        <div class="s7-clip"></div>
+                        <div class="s7-card-inner"><img src="images/WhatsApp Image 2026-08-25 at 3.00.14 PM.jpeg" alt="Pic3"></div>
+                    </div>
+                    <div class="s7-card floating" style="transform: rotate(3deg); top: 30px; animation-delay: 0.2s;">
+                        <div class="s7-clip"></div>
+                        <div class="s7-card-inner"><img src="images/ChatGPT Image Aug 25, 2026, 02_34_33 PM(1).png" alt="Pic4"></div>
+                    </div>
+                    <div class="s7-card floating" style="transform: rotate(-2deg); top: -5px; animation-delay: 0.4s;">
+                        <div class="s7-clip"></div>
+                        <div class="s7-card-inner"><img src="images/WhatsApp Image 2026-08-25 at 2.31.26 PM.jpeg" alt="Pic5"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <img src="https://img.freepik.com/premium-psd/camera-transparent-background-vector-elementon-transparent-background_1279565-10194.jpg?w=2000" class="deco-camera" alt="Vintage Camera">
+            <img src="https://cdn-icons-png.flaticon.com/512/2850/2850785.png" class="deco-flower" alt="Red Flower">
+            
+            <div class="s7-next-arrow" onclick="goTo(8)">❯</div>
+        </div>
+
+        <!-- Screen 8: Mindmap -->
+        <div class="screen" id="screen-8">
+            <div class="back-btn" onclick="goTo(4)">❮ Gifts</div>
+            <h1 class="title-serif" style="font-size: 45px; position: absolute; top: 10%; width: 100%;">YOU ARE MY</h1>
+            
+            <img src="https://media.giphy.com/media/WUx7865lOue11lSGAO/giphy.gif" alt="Shinchan" class="s8-center-gif floating">
+            
+            <div class="mindmap-trait trait-1">google maps 📍</div>
+            <div class="mindmap-trait trait-2">my lifeline ❤️</div>
+            <div class="mindmap-trait trait-3">bank account 💰</div>
+            <div class="mindmap-trait trait-4">food stealer 🍔</div>
+            <div class="mindmap-trait trait-5">crybaby 😭</div>
+            <div class="mindmap-trait trait-6">bestie by choice ✨</div>
+
+            <div class="heart-next" onclick="goTo(4)" style="width: 80px; background: #A91B1B; color: white;">Gifts<br>↺</div>
+        </div>
+
+        <!-- Screen 9: Final -->
+        <div class="screen" id="screen-9" style="padding: 40px; justify-content: space-between;">
+            <div class="back-btn" onclick="goTo(4)">❮ Gifts</div>
+            <h1 class="title-script" style="color: #A91B1B; font-size: 55px; margin-top: 40px;">To my forever best friend ❤️</h1>
+            
+            <p style="font-weight: bold; max-width: 800px; margin: 20px auto; z-index: 10; font-size: 20px;">
+                I'm so grateful to have you in my life. Thank you for being my biggest supporter, my secret keeper, and the one who always knows how to make me smile. From endless talks to silly laughs and every moment in between, life feels brighter because of you. Wishing you all the happiness, love, peace, and success you truly deserve. Never forget how special, strong, and deeply loved you are.
+            </p>
+            
+            <div style="display: flex; justify-content: space-between; width: 100%; align-items: flex-end; z-index: 10;">
+                <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3h5YXh4bTR4Ynh4bDR4b2J4bTF4N3I0ZzM3NjExMXhxNnE2cSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/Y4P943aTJRCYfperyN/giphy.gif" alt="Shinchan" class="floating" style="height: 180px;">
+                <img src="https://media.giphy.com/media/RNELiKsvREMb86Hmoy/giphy.gif" alt="Flowers" class="floating" style="height: 160px; animation-delay: 1s;">
+            </div>
+            <div class="heart-next" onclick="goTo(4)" style="width: 80px; background: #A91B1B; color: white;">Gifts<br>↺</div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    function goTo(screenNumber) {
+        const screens = document.querySelectorAll('.screen');
+        screens.forEach(screen => {
+            screen.classList.remove('active');
+            screen.style.display = 'none';
+        });
+        
+        const targetScreen = document.getElementById('screen-' + screenNumber);
+        if (targetScreen) {
+            targetScreen.style.display = 'flex'; 
+            void targetScreen.offsetWidth; 
+            targetScreen.classList.add('active'); 
+        }
+    }
+</script>
+
+</body>
+</html>
