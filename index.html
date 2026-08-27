@@ -19,6 +19,28 @@
             overflow: hidden;
         }
 
+        /* 📱 ROTATE SCREEN OVERLAY 📱 */
+        #rotate-message {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background-color: #F8F1E5;
+            z-index: 9999;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+        }
+        #rotate-message h1 { font-family: 'Chewy', cursive; color: #A91B1B; font-size: 38px; margin-bottom: 10px; }
+        #rotate-message p { font-family: 'Kalam', cursive; font-size: 22px; color: #555; font-weight: bold; }
+        #rotate-message img { width: 150px; margin-top: 20px; filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.2)); }
+
+        @media screen and (max-width: 900px) and (orientation: portrait) {
+            #rotate-message { display: flex; }
+            .card-wrapper { display: none !important; }
+        }
+
         .card-wrapper {
             width: 95vw;
             max-width: 1000px;
@@ -87,7 +109,6 @@
         }
         .heart-next:hover { width: 75px; background-color: #ffb1be; }
 
-        /* Floating for Images */
         @keyframes float {
             0%, 100% { transform: translateY(0px); }
             50% { transform: translateY(-10px); }
@@ -239,81 +260,43 @@
         #screen-9.active .title-script { animation: fadeInUp 0.9s ease-out forwards, floatText 3s ease-in-out infinite; }
         #screen-9.active p { animation: slowReveal 1.5s ease-out 0.5s forwards, floatText 3s ease-in-out infinite; }
 
-        /* ========================================================================= */
-        /* 📱 MOBILE RESPONSIVENESS FIXES 📱                                         */
-        /* ========================================================================= */
-        @media (max-width: 768px) {
-            .card-wrapper {
-                aspect-ratio: auto;
-                height: 90vh; 
-                padding: 10px;
-            }
-            
-            .title-serif { font-size: 32px !important; }
-            .title-script { font-size: 45px !important; margin-top: 15px; }
-            h2 { font-size: 22px !important; }
+        /* General Scaling for Landscape Mobile Displays */
+        @media screen and (max-height: 500px) and (orientation: landscape) {
+            .title-serif { font-size: 30px !important; }
+            .title-script { font-size: 45px !important; }
+            .s7-ransom span { font-size: 35px !important; padding: 2px 6px !important; }
             p { font-size: 14px !important; }
+            img.floating { height: 110px !important; }
             
-            .btn-group button { font-size: 18px; padding: 6px 20px; }
-            .back-btn { font-size: 14px; top: 15px; left: 15px; z-index: 200; }
-            .heart-next { height: 40px; width: 50px; font-size: 14px; z-index: 200; }
-            .heart-next:hover { width: 60px; }
-
-            /* Screen 1-3 Images */
-            img.floating { height: 140px !important; }
+            #screen-4 svg textPath { font-size: 32px !important; }
+            .gift-img { width: 100px !important; }
             
-            /* Screen 4: Gifts */
-            #screen-4 svg { width: 100% !important; margin-bottom: 5px !important; }
-            #screen-4 svg textPath { font-size: 42px !important; }
-            .gift-img { width: 75px !important; margin: 0 2px !important; }
-            .s4-arrow { right: 5px; font-size: 30px; }
-            .s4-dancing-shinchan { height: 90px; bottom: 10px; left: 10px; }
-
-            /* Screen 5: Rakhi */
-            .s5-rakhi { width: 180px !important; top: -60px; left: -60px; }
-            .s5-text-wrap { width: 90%; top: 25%; left: 5%; text-align: center; }
-            .s5-ribbon { padding: 4px 20px; font-size: 18px; }
-            .s5-polaroid-wrap { width: 180px; height: 180px; top: 68%; right: auto; left: 50%; transform: translate(-50%, -50%) !important; animation: floatText 3s ease-in-out infinite; }
-            .s5-shinchan { height: 120px !important; right: 0; bottom: 5px; }
-
-            /* Screen 6: Best Sister */
-            #screen-6 .title-serif { font-size: 40px !important; }
-            #screen-6 .title-script { font-size: 50px !important; }
-            #screen-6 img[alt="Ribbon"] { width: 60px !important; }
-
-            /* Screen 7: Memories */
-            .s7-ransom span { font-size: 26px !important; padding: 2px 5px !important; }
-            .s7-ransom .r-star { font-size: 20px !important; margin-top: 5px !important; }
-            .clothesline-wrapper { height: 180px; }
-            .s7-card { width: 55px; padding: 3px; }
-            .s7-card-inner img { height: 60px; }
-            .s7-clip { width: 8px; height: 20px; top: -10px; }
-            .deco-bow { width: 25px; }
-            .deco-camera { width: 50px; left: 10px; bottom: 10px; }
-            .deco-flower { width: 45px; left: 40%; bottom: 10px; }
-            .s7-next-arrow { font-size: 35px; right: 10px; bottom: 10px; }
-
-            /* Screen 8: Mindmap */
-            .s8-center-gif { max-width: 180px !important; }
-            .mindmap-trait { font-size: 12px; padding: 4px 10px; }
-            .trait-1 { top: 20%; left: 2%; }
-            .trait-2 { top: 45%; left: 0%; }
-            .trait-3 { top: 75%; left: 2%; }
-            .trait-4 { top: 20%; right: 2%; }
-            .trait-5 { top: 45%; right: 0%; }
-            .trait-6 { top: 75%; right: 2%; }
-
-            /* Screen 9: Final */
-            #screen-9 p { font-size: 14px !important; max-width: 95%; margin-top: 10px; }
+            .s5-rakhi { width: 250px !important; top: -100px; left: -100px; }
+            .s5-polaroid-wrap { width: 180px; height: 180px; }
+            
+            .clothesline-wrapper { height: 180px; margin-top: 10px; }
+            .s7-card { width: 90px; }
+            .s7-card-inner img { height: 110px; }
+            
+            .s8-center-gif { max-width: 200px !important; }
+            .mindmap-trait { font-size: 14px; padding: 4px 10px; }
         }
 
     </style>
 </head>
 <body>
 
+<!-- ROTATION LOCK OVERLAY -->
+<div id="rotate-message">
+    <h1>Please Rotate Your Phone! 🔄</h1>
+    <p>This surprise looks best in landscape mode.<br>Turn your phone sideways!</p>
+    <img src="https://media.giphy.com/media/WUx7865lOue11lSGAO/giphy.gif" alt="Rotate screen">
+</div>
+
 <div class="card-wrapper">
     <div class="card-inner">
 
+        <!-- Screen 1: Intro -->
         <div class="screen active" id="screen-1" style="display: flex;">
             <h1 class="title-serif" style="font-size: 45px;">I have made something for you</h1>
             <img src="https://media.giphy.com/media/LOEgEYZHyGbXY8KgA3/giphy.gif" alt="Shinchan Sticker" class="floating" style="height: 180px; margin: 20px 0;">
@@ -324,12 +307,14 @@
             </div>
         </div>
 
+        <!-- Screen 2: Angry -->
         <div class="screen" id="screen-2">
             <h1 class="title-serif" style="font-size: 55px;">HOW DARE YOU!?</h1>
             <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3h5YXh4bTR4Ynh4bDR4b2J4bTF4N3I0ZzM3NjExMXhxNnE2cSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/SqNWXTC1bozoOdhiIR/giphy.gif" alt="Angry Sticker" class="floating" style="height: 220px; margin: 20px 0;">
             <div class="btn-group"><button onclick="goTo(1)">TRY AGAIN</button></div>
         </div>
 
+        <!-- Screen 3: Excited -->
         <div class="screen" id="screen-3">
             <h1 class="title-serif" style="font-size: 50px;">Are you really excited?</h1>
             <img src="https://media.giphy.com/media/ZcthNRpghDfqieTcsm/giphy.gif" alt="Excited Sticker" class="floating" style="height: 220px; margin: 20px 0;">
@@ -339,6 +324,7 @@
             </div>
         </div>
 
+        <!-- Screen 4: Gifts -->
         <div class="screen" id="screen-4">
             <svg viewBox="0 0 600 120" style="width: 80%; height: auto; overflow: visible; margin-bottom: 20px;">
                 <path id="curve" d="M 0,110 Q 300,-10 600,110" fill="transparent"></path>
@@ -362,6 +348,7 @@
             <img src="https://media.tenor.com/-RYUs_Icgw4AAAAi/crayon-shin-chan-crayon-shin-chan-dance.gif" alt="Dancing Shinchan" class="s4-dancing-shinchan">
         </div>
 
+        <!-- Screen 5: HAPPY RAKSHABANDHAN -->
         <div class="screen" id="screen-5">
             <div class="back-btn" onclick="goTo(4)">❮ Gifts</div>
             
@@ -395,6 +382,7 @@
             <div class="heart-next" onclick="goTo(9)">more<br>></div>
         </div>
 
+        <!-- Screen 6: Best Sister -->
         <div class="screen" id="screen-6" style="padding: 40px;">
             <div class="back-btn" onclick="goTo(4)">❮ Gifts</div>
             <h1 class="title-serif" style="font-size: 55px; margin-top: 20px;">Best Sister Award</h1>
@@ -410,6 +398,7 @@
             <div class="heart-next" onclick="goTo(8)">more<br>></div>
         </div>
 
+        <!-- Screen 7: Memories -->
         <div class="screen" id="screen-7">
             <div class="back-btn" onclick="goTo(4)">❮ Gifts</div>
             
@@ -467,6 +456,7 @@
             <div class="s7-next-arrow" onclick="goTo(8)">❯</div>
         </div>
 
+        <!-- Screen 8: Mindmap -->
         <div class="screen" id="screen-8">
             <div class="back-btn" onclick="goTo(4)">❮ Gifts</div>
             <h1 class="title-serif" style="font-size: 45px; position: absolute; top: 10%; width: 100%;">YOU ARE MY</h1>
@@ -483,6 +473,7 @@
             <div class="heart-next" onclick="goTo(4)" style="width: 80px; background: #A91B1B; color: white;">Gifts<br>↺</div>
         </div>
 
+        <!-- Screen 9: Final -->
         <div class="screen" id="screen-9" style="padding: 40px; justify-content: space-between;">
             <div class="back-btn" onclick="goTo(4)">❮ Gifts</div>
             <h1 class="title-script" style="color: #A91B1B; font-size: 55px; margin-top: 40px;">To my forever best friend ❤️</h1>
