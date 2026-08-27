@@ -43,7 +43,8 @@
 
         .card-wrapper {
             width: 95vw;
-            max-width: 1000px;
+            /* This magic math forces the card to shrink if the screen height is too small */
+            max-width: min(1000px, calc(90vh * 16 / 9)); 
             aspect-ratio: 16 / 9; 
             background-color: #fff;
             background-image: 
@@ -78,6 +79,8 @@
             align-items: center; 
             justify-content: center;
             text-align: center;
+            overflow-y: auto; /* ALLOWS SCROLLING */
+            overflow-x: hidden;
         }
         
         .screen.active { display: flex; }
@@ -262,24 +265,36 @@
 
         /* General Scaling for Landscape Mobile Displays */
         @media screen and (max-height: 500px) and (orientation: landscape) {
-            .title-serif { font-size: 30px !important; }
-            .title-script { font-size: 45px !important; }
-            .s7-ransom span { font-size: 35px !important; padding: 2px 6px !important; }
-            p { font-size: 14px !important; }
-            img.floating { height: 110px !important; }
+            /* Changed to flex-start so it scrolls smoothly from the top down without clipping */
+            .screen { padding: 15px !important; justify-content: flex-start !important; padding-top: 50px !important; }
             
+            .title-serif { font-size: 28px !important; }
+            .title-script { font-size: 38px !important; margin-top: 5px; }
+            .s7-ransom span { font-size: 30px !important; padding: 2px 6px !important; }
+            p { font-size: 13px !important; }
+            img.floating { height: 110px !important; margin: 10px 0 !important; }
+            
+            .btn-group button { font-size: 18px; padding: 5px 20px; }
+            .back-btn { top: 10px; left: 10px; padding: 3px 10px; font-size: 12px; }
+            .heart-next { width: 45px; height: 35px; font-size: 12px; }
+
             #screen-4 svg textPath { font-size: 32px !important; }
-            .gift-img { width: 100px !important; }
+            .gift-img { width: 100px !important; margin-bottom: 20px !important;}
+            .s4-dancing-shinchan { height: 100px; }
             
-            .s5-rakhi { width: 250px !important; top: -100px; left: -100px; }
-            .s5-polaroid-wrap { width: 180px; height: 180px; }
+            .s5-text-wrap { margin-top: 20px; }
+            .s5-rakhi { width: 200px !important; top: -80px; left: -80px; }
+            .s5-polaroid-wrap { width: 150px; height: 150px; }
             
             .clothesline-wrapper { height: 180px; margin-top: 10px; }
-            .s7-card { width: 90px; }
-            .s7-card-inner img { height: 110px; }
+            .s7-card { width: 80px; padding: 4px; }
+            .s7-card-inner img { height: 100px; }
+            .deco-camera { width: 50px; left: 10px; bottom: 10px; }
             
-            .s8-center-gif { max-width: 200px !important; }
-            .mindmap-trait { font-size: 14px; padding: 4px 10px; }
+            .s8-center-gif { max-width: 180px !important; }
+            .mindmap-trait { font-size: 12px; padding: 4px 10px; }
+
+            #screen-9 p { margin: 10px auto; font-size: 14px !important; }
         }
 
     </style>
