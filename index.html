@@ -263,23 +263,25 @@
         #screen-9.active p { animation: slowReveal 1.5s ease-out 0.5s forwards, floatText 3s ease-in-out infinite; }
 
         /* ========================================================================= */
-        /* 📱 FULL SCREEN MOBILE LANDSCAPE FIT & FLUID SCALING 📱                      */
+        /* 📱 FULL SCREEN MOBILE LANDSCAPE FIT & FLUID SCALING 📱                    */
         /* ========================================================================= */
         @media screen and (max-height: 500px) and (orientation: landscape) {
             body {
-                align-items: stretch;
-                justify-content: stretch;
+                align-items: flex-start; /* Start from top so content isn't cut off when scrolling */
+                overflow-y: auto; /* Enable sliding/scrolling! */
                 padding: 0;
             }
 
             .card-wrapper {
                 width: 100vw !important;
+                min-height: 480px !important; /* Force a minimum height so absolute items don't overlap */
                 height: 100vh !important;
                 max-width: none !important;
                 aspect-ratio: auto !important;
                 border-radius: 0 !important;
                 padding: 5px !important;
                 box-shadow: none !important;
+                margin: 0;
             }
 
             .card-inner {
@@ -294,7 +296,7 @@
             .title-serif { font-size: 26px !important; }
             .title-script { font-size: 36px !important; margin-top: 2px; }
             .s7-ransom span { font-size: 28px !important; padding: 2px 5px !important; }
-            p { font-size: 12px !important; line-height: 1.3 !important; }
+            p { font-size: 13px !important; line-height: 1.4 !important; }
             img.floating { height: 95px !important; margin: 5px 0 !important; }
             
             .btn-group button { font-size: 16px; padding: 4px 18px; }
@@ -306,26 +308,26 @@
             .gift-img { width: 85px !important; margin-bottom: 5px !important;}
             .s4-dancing-shinchan { height: 85px; bottom: 5px; }
             
-            .s5-text-wrap { margin-top: 5px; }
-            .s5-rakhi { width: 160px !important; top: -65px; left: -65px; }
-            .s5-polaroid-wrap { width: 130px; height: 130px; }
+            .s5-text-wrap { margin-top: 5px; width: 55%; }
+            .s5-rakhi { width: 140px !important; top: -50px; left: -50px; }
+            .s5-polaroid-wrap { width: 130px; height: 130px; right: 5%; }
             
             .clothesline-wrapper { height: 150px; margin-top: 5px; }
             .s7-card { width: 70px; padding: 3px; }
             .s7-card-inner img { height: 85px; }
             .deco-camera { width: 40px; left: 10px; bottom: 5px; }
+            .s7-next-arrow { bottom: 10px; right: 20px; font-size: 35px; }
             
             .s8-center-gif { max-width: 140px !important; }
             .mindmap-trait { font-size: 11px; padding: 3px 8px; }
 
-            #screen-9 p { margin: 5px auto; font-size: 12px !important; }
+            #screen-9 p { margin: 5px auto; font-size: 13px !important; max-width: 90%; }
         }
 
     </style>
 </head>
 <body>
 
-<!-- ROTATION LOCK OVERLAY -->
 <div id="rotate-message">
     <h1>Please Rotate Your Phone! 🔄</h1>
     <p>This surprise looks best in landscape mode.<br>Turn your phone sideways!</p>
@@ -335,7 +337,6 @@
 <div class="card-wrapper">
     <div class="card-inner">
 
-        <!-- Screen 1: Intro -->
         <div class="screen active" id="screen-1" style="display: flex;">
             <h1 class="title-serif" style="font-size: 45px;">I have made something for you</h1>
             <img src="https://media.giphy.com/media/LOEgEYZHyGbXY8KgA3/giphy.gif" alt="Shinchan Sticker" class="floating" style="height: 180px; margin: 20px 0;">
@@ -346,14 +347,12 @@
             </div>
         </div>
 
-        <!-- Screen 2: Angry -->
         <div class="screen" id="screen-2">
             <h1 class="title-serif" style="font-size: 55px;">HOW DARE YOU!?</h1>
             <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3h5YXh4bTR4Ynh4bDR4b2J4bTF4N3I0ZzM3NjExMXhxNnE2cSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/SqNWXTC1bozoOdhiIR/giphy.gif" alt="Angry Sticker" class="floating" style="height: 220px; margin: 20px 0;">
             <div class="btn-group"><button onclick="goTo(1)">TRY AGAIN</button></div>
         </div>
 
-        <!-- Screen 3: Excited -->
         <div class="screen" id="screen-3">
             <h1 class="title-serif" style="font-size: 50px;">Are you really excited?</h1>
             <img src="https://media.giphy.com/media/ZcthNRpghDfqieTcsm/giphy.gif" alt="Excited Sticker" class="floating" style="height: 220px; margin: 20px 0;">
@@ -363,7 +362,6 @@
             </div>
         </div>
 
-        <!-- Screen 4: Gifts -->
         <div class="screen" id="screen-4">
             <svg viewBox="0 0 600 120" style="width: 80%; height: auto; overflow: visible; margin-bottom: 20px;">
                 <path id="curve" d="M 0,110 Q 300,-10 600,110" fill="transparent"></path>
@@ -387,7 +385,6 @@
             <img src="https://media.tenor.com/-RYUs_Icgw4AAAAi/crayon-shin-chan-crayon-shin-chan-dance.gif" alt="Dancing Shinchan" class="s4-dancing-shinchan">
         </div>
 
-        <!-- Screen 5: HAPPY RAKSHABANDHAN -->
         <div class="screen" id="screen-5">
             <div class="back-btn" onclick="goTo(4)">❮ Gifts</div>
             
@@ -421,7 +418,6 @@
             <div class="heart-next" onclick="goTo(9)">more<br>></div>
         </div>
 
-        <!-- Screen 6: Best Sister -->
         <div class="screen" id="screen-6" style="padding: 40px;">
             <div class="back-btn" onclick="goTo(4)">❮ Gifts</div>
             <h1 class="title-serif" style="font-size: 55px; margin-top: 20px;">Best Sister Award</h1>
@@ -437,7 +433,6 @@
             <div class="heart-next" onclick="goTo(8)">more<br>></div>
         </div>
 
-        <!-- Screen 7: Memories -->
         <div class="screen" id="screen-7">
             <div class="back-btn" onclick="goTo(4)">❮ Gifts</div>
             
@@ -495,7 +490,6 @@
             <div class="s7-next-arrow" onclick="goTo(8)">❯</div>
         </div>
 
-        <!-- Screen 8: Mindmap -->
         <div class="screen" id="screen-8">
             <div class="back-btn" onclick="goTo(4)">❮ Gifts</div>
             <h1 class="title-serif" style="font-size: 45px; position: absolute; top: 10%; width: 100%;">YOU ARE MY</h1>
@@ -512,7 +506,6 @@
             <div class="heart-next" onclick="goTo(4)" style="width: 80px; background: #A91B1B; color: white;">Gifts<br>↺</div>
         </div>
 
-        <!-- Screen 9: Final -->
         <div class="screen" id="screen-9" style="padding: 40px; justify-content: space-between;">
             <div class="back-btn" onclick="goTo(4)">❮ Gifts</div>
             <h1 class="title-script" style="color: #A91B1B; font-size: 55px; margin-top: 40px;">To my forever best friend ❤️</h1>
