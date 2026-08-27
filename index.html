@@ -87,6 +87,7 @@
         }
         .heart-next:hover { width: 75px; background-color: #ffb1be; }
 
+        /* Floating for Images */
         @keyframes float {
             0%, 100% { transform: translateY(0px); }
             50% { transform: translateY(-10px); }
@@ -100,28 +101,16 @@
         .s4-arrow:hover { transform: scale(1.2); }
         .s4-dancing-shinchan { position: absolute; bottom: 20px; left: 30px; height: 160px; z-index: 15; object-fit: contain; }
 
-        /* ========================================= */
-        /* ✨ SCREEN 5 - BEAUTIFIED ✨               */
-        /* ========================================= */
-        
-        /* Softened, larger corner blobs to fill the empty cream space naturally */
+        /* SCREEN 5 FIXES */
         .s5-blob-tl { position: absolute; top: 0; left: 0; width: 300px; height: 300px; background: #A91B1B; border-radius: 0 0 300px 0; z-index: 1; opacity: 0.15; }
         .s5-blob-br { position: absolute; bottom: 0; right: 0; width: 400px; height: 350px; background: #A91B1B; border-radius: 400px 0 0 0; z-index: 1; opacity: 0.15; }
-        
-        /* Floating festive sparkles for decoration */
         .s5-sparkle { position: absolute; color: #A91B1B; z-index: 5; opacity: 0.7; font-family: sans-serif; }
-
-        /* Pushed the text wrap slightly to make room for the Rakhi */
         .s5-text-wrap { position: absolute; top: 52%; left: 8%; transform: translateY(-50%); width: 45%; text-align: left; z-index: 10; padding-top: 20px; }
-        
-        /* Adjusted Rakhi so it doesn't cross over the word HAPPY */
         .s5-rakhi { position: absolute; top: -155px; left: -155px; width: 400px !important; height: auto !important; max-height: 200px !important; transform: rotate(-15deg); object-fit: contain; z-index: 15; filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.2)); }
-        
         .s5-ribbon { background: #A91B1B; color: white; display: inline-block; padding: 6px 40px; font-family: 'Chewy'; font-size: 26px; margin-top: 15px; position: relative; box-shadow: 2px 4px 0px #6d1010; }
         .s5-ribbon::before, .s5-ribbon::after { content: ""; position: absolute; top: 0; border: 20px solid #A91B1B; }
         .s5-ribbon::before { left: -20px; border-left-color: transparent; }
         .s5-ribbon::after { right: -20px; border-right-color: transparent; }
-        
         .s5-polaroid-wrap { position: absolute; top: 5%; right: 10%; transform: translateY(-50%); width: 290px; height: 290px; z-index: 10; }
         .s5-polaroid-back { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #8b1313; transform: rotate(-6deg); z-index: 1; box-shadow: 3px 5px 15px rgba(0,0,0,0.4); }
         .s5-polaroid-front { position: absolute; top: 10px; left: -10px; width: 100%; height: 100%; background: #A91B1B; padding: 12px; padding-bottom: 40px; transform: rotate(4deg); z-index: 2; box-shadow: 2px 5px 10px rgba(0,0,0,0.2); }
@@ -180,14 +169,17 @@
         .trait-6 { top: 85%; right: 18%; transform: rotate(2deg); } 
 
         /* ========================================================================= */
-        /* TEXT ANIMATIONS */
+        /* TEXT & SYNCHRONIZED FLOATING ANIMATIONS */
         /* ========================================================================= */
 
         .screen h1, .screen h2, .screen p, .screen .s5-ribbon, .screen svg text, .screen .s7-ransom span, .screen .mindmap-trait, .screen .s5-sparkle {
             opacity: 0;
         }
-        
-        .s7-ransom span { position: relative; } 
+
+        @keyframes floatText {
+            0%, 100% { translate: 0px 0px; }
+            50% { translate: 0px -10px; }
+        }
 
         @keyframes trackingIn { 0% { letter-spacing: -0.5em; opacity: 0; transform: scale(0.9); } 100% { letter-spacing: normal; opacity: 1; transform: scale(1); } }
         @keyframes popIn { 0% { opacity: 0; transform: scale(0.4); } 70% { transform: scale(1.15); opacity: 1; } 100% { opacity: 1; transform: scale(1); } }
@@ -201,26 +193,29 @@
         @keyframes dropInRelative { 0% { opacity: 0; top: -50px; } 60% { opacity: 1; top: 15px; } 80% { top: -5px; } 100% { opacity: 1; top: 0px; } }
         @keyframes simpleFade { 0% { opacity: 0; } 100% { opacity: 1; } }
 
-        /* Applying animations */
-        #screen-1.active .title-serif { animation: trackingIn 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; }
-        #screen-1.active h2 { animation: popIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.5s forwards; }
-        #screen-2.active .title-serif { animation: shakeAngry 0.8s forwards; }
-        #screen-3.active .title-serif { animation: bounceInUp 0.8s ease-out forwards; }
+        #screen-1.active .title-serif { animation: trackingIn 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards, floatText 3s ease-in-out infinite; }
+        #screen-1.active h2 { animation: popIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.5s forwards, floatText 3s ease-in-out infinite; }
+        
+        #screen-2.active .title-serif { animation: shakeAngry 0.8s forwards, floatText 3s ease-in-out infinite; }
+        
+        #screen-3.active .title-serif { animation: bounceInUp 0.8s ease-out forwards, floatText 3s ease-in-out infinite; }
+        
         #screen-4.active svg text { animation: simpleFade 1.2s ease-in forwards; }
-        #screen-4.active h2 { animation: slideInRight 0.8s ease-out 0.4s forwards; }
+        #screen-4.active svg { animation: floatText 3s ease-in-out infinite; } 
+        #screen-4.active h2 { animation: slideInRight 0.8s ease-out 0.4s forwards, floatText 3s ease-in-out infinite; }
 
-        #screen-5.active h2 { animation: slideInLeft 0.7s ease-out forwards; }
-        #screen-5.active .title-script { animation: popIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.3s forwards; }
-        #screen-5.active p { animation: fadeInUp 0.8s ease-out 0.6s forwards; }
-        #screen-5.active .s5-ribbon { animation: dropInRotate 0.6s ease-out 1s forwards; }
-        /* Make sparkles fade in smoothly */
-        #screen-5.active .s5-sparkle { animation: simpleFade 1s forwards, float 3s ease-in-out infinite; }
+        #screen-5.active h2 { animation: slideInLeft 0.7s ease-out forwards, floatText 3s ease-in-out infinite; }
+        #screen-5.active .title-script { animation: popIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.3s forwards, floatText 3s ease-in-out infinite; }
+        #screen-5.active p { animation: fadeInUp 0.8s ease-out 0.6s forwards, floatText 3s ease-in-out infinite; }
+        #screen-5.active .s5-ribbon { animation: dropInRotate 0.6s ease-out 1s forwards, floatText 3s ease-in-out infinite; }
+        #screen-5.active .s5-sparkle { animation: simpleFade 1s forwards, floatText 3s ease-in-out infinite; }
 
-        #screen-6.active .title-serif { animation: trackingIn 0.9s ease-out forwards; }
-        #screen-6.active p:first-of-type { animation: simpleFade 0.8s ease-out 0.5s forwards; }
-        #screen-6.active .title-script { animation: popIn 0.9s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.8s forwards; }
-        #screen-6.active p:last-of-type { animation: slowReveal 1.2s ease-out 1.2s forwards; }
+        #screen-6.active .title-serif { animation: trackingIn 0.9s ease-out forwards, floatText 3s ease-in-out infinite; }
+        #screen-6.active p:first-of-type { animation: simpleFade 0.8s ease-out 0.5s forwards, floatText 3s ease-in-out infinite; }
+        #screen-6.active .title-script { animation: popIn 0.9s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.8s forwards, floatText 3s ease-in-out infinite; }
+        #screen-6.active p:last-of-type { animation: slowReveal 1.2s ease-out 1.2s forwards, floatText 3s ease-in-out infinite; }
 
+        #screen-7.active .s7-ransom { animation: floatText 3s ease-in-out infinite; }
         #screen-7.active .s7-ransom span { animation: dropInRelative 0.6s ease-out forwards; }
         #screen-7.active .s7-ransom span:nth-child(1) { animation-delay: 0.1s; }
         #screen-7.active .s7-ransom span:nth-child(2) { animation-delay: 0.2s; }
@@ -230,19 +225,87 @@
         #screen-7.active .s7-ransom span:nth-child(6) { animation-delay: 0.6s; }
         #screen-7.active .s7-ransom span:nth-child(7) { animation-delay: 0.7s; }
         #screen-7.active .s7-ransom span:nth-child(8) { animation-delay: 0.8s; }
-        #screen-7.active .s7-ransom .r-star { animation: popIn 0.5s ease-out 1.2s forwards; }
+        #screen-7.active .r-star { animation: popIn 0.5s ease-out 1.2s forwards; }
 
-        #screen-8.active .title-serif { animation: trackingIn 0.8s ease-out forwards; }
-        #screen-8.active .mindmap-trait { animation: simpleFade 0.6s forwards, float 3s ease-in-out infinite; }
-        #screen-8.active .trait-1 { animation-delay: 0.2s, 0.2s; }
-        #screen-8.active .trait-2 { animation-delay: 0.5s, 0.5s; }
-        #screen-8.active .trait-3 { animation-delay: 0.8s, 0.8s; }
-        #screen-8.active .trait-4 { animation-delay: 0.3s, 0.3s; }
-        #screen-8.active .trait-5 { animation-delay: 0.6s, 0.6s; }
-        #screen-8.active .trait-6 { animation-delay: 0.9s, 0.9s; }
+        #screen-8.active .title-serif { animation: trackingIn 0.8s ease-out forwards, floatText 3s ease-in-out infinite; }
+        #screen-8.active .mindmap-trait { animation: simpleFade 0.6s forwards, floatText 3s ease-in-out infinite; }
+        #screen-8.active .trait-1 { animation-delay: 0.2s, 0s; }
+        #screen-8.active .trait-2 { animation-delay: 0.5s, 0s; }
+        #screen-8.active .trait-3 { animation-delay: 0.8s, 0s; }
+        #screen-8.active .trait-4 { animation-delay: 0.3s, 0s; }
+        #screen-8.active .trait-5 { animation-delay: 0.6s, 0s; }
+        #screen-8.active .trait-6 { animation-delay: 0.9s, 0s; }
 
-        #screen-9.active .title-script { animation: fadeInUp 0.9s ease-out forwards; }
-        #screen-9.active p { animation: slowReveal 1.5s ease-out 0.5s forwards; }
+        #screen-9.active .title-script { animation: fadeInUp 0.9s ease-out forwards, floatText 3s ease-in-out infinite; }
+        #screen-9.active p { animation: slowReveal 1.5s ease-out 0.5s forwards, floatText 3s ease-in-out infinite; }
+
+        /* ========================================================================= */
+        /* 📱 MOBILE RESPONSIVENESS FIXES 📱                                         */
+        /* ========================================================================= */
+        @media (max-width: 768px) {
+            .card-wrapper {
+                aspect-ratio: auto;
+                height: 90vh; 
+                padding: 10px;
+            }
+            
+            .title-serif { font-size: 32px !important; }
+            .title-script { font-size: 45px !important; margin-top: 15px; }
+            h2 { font-size: 22px !important; }
+            p { font-size: 14px !important; }
+            
+            .btn-group button { font-size: 18px; padding: 6px 20px; }
+            .back-btn { font-size: 14px; top: 15px; left: 15px; z-index: 200; }
+            .heart-next { height: 40px; width: 50px; font-size: 14px; z-index: 200; }
+            .heart-next:hover { width: 60px; }
+
+            /* Screen 1-3 Images */
+            img.floating { height: 140px !important; }
+            
+            /* Screen 4: Gifts */
+            #screen-4 svg { width: 100% !important; margin-bottom: 5px !important; }
+            #screen-4 svg textPath { font-size: 42px !important; }
+            .gift-img { width: 75px !important; margin: 0 2px !important; }
+            .s4-arrow { right: 5px; font-size: 30px; }
+            .s4-dancing-shinchan { height: 90px; bottom: 10px; left: 10px; }
+
+            /* Screen 5: Rakhi */
+            .s5-rakhi { width: 180px !important; top: -60px; left: -60px; }
+            .s5-text-wrap { width: 90%; top: 25%; left: 5%; text-align: center; }
+            .s5-ribbon { padding: 4px 20px; font-size: 18px; }
+            .s5-polaroid-wrap { width: 180px; height: 180px; top: 68%; right: auto; left: 50%; transform: translate(-50%, -50%) !important; animation: floatText 3s ease-in-out infinite; }
+            .s5-shinchan { height: 120px !important; right: 0; bottom: 5px; }
+
+            /* Screen 6: Best Sister */
+            #screen-6 .title-serif { font-size: 40px !important; }
+            #screen-6 .title-script { font-size: 50px !important; }
+            #screen-6 img[alt="Ribbon"] { width: 60px !important; }
+
+            /* Screen 7: Memories */
+            .s7-ransom span { font-size: 26px !important; padding: 2px 5px !important; }
+            .s7-ransom .r-star { font-size: 20px !important; margin-top: 5px !important; }
+            .clothesline-wrapper { height: 180px; }
+            .s7-card { width: 55px; padding: 3px; }
+            .s7-card-inner img { height: 60px; }
+            .s7-clip { width: 8px; height: 20px; top: -10px; }
+            .deco-bow { width: 25px; }
+            .deco-camera { width: 50px; left: 10px; bottom: 10px; }
+            .deco-flower { width: 45px; left: 40%; bottom: 10px; }
+            .s7-next-arrow { font-size: 35px; right: 10px; bottom: 10px; }
+
+            /* Screen 8: Mindmap */
+            .s8-center-gif { max-width: 180px !important; }
+            .mindmap-trait { font-size: 12px; padding: 4px 10px; }
+            .trait-1 { top: 20%; left: 2%; }
+            .trait-2 { top: 45%; left: 0%; }
+            .trait-3 { top: 75%; left: 2%; }
+            .trait-4 { top: 20%; right: 2%; }
+            .trait-5 { top: 45%; right: 0%; }
+            .trait-6 { top: 75%; right: 2%; }
+
+            /* Screen 9: Final */
+            #screen-9 p { font-size: 14px !important; max-width: 95%; margin-top: 10px; }
+        }
 
     </style>
 </head>
@@ -251,7 +314,6 @@
 <div class="card-wrapper">
     <div class="card-inner">
 
-        <!-- Screen 1: Intro -->
         <div class="screen active" id="screen-1" style="display: flex;">
             <h1 class="title-serif" style="font-size: 45px;">I have made something for you</h1>
             <img src="https://media.giphy.com/media/LOEgEYZHyGbXY8KgA3/giphy.gif" alt="Shinchan Sticker" class="floating" style="height: 180px; margin: 20px 0;">
@@ -262,14 +324,12 @@
             </div>
         </div>
 
-        <!-- Screen 2: Angry -->
         <div class="screen" id="screen-2">
             <h1 class="title-serif" style="font-size: 55px;">HOW DARE YOU!?</h1>
             <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3h5YXh4bTR4Ynh4bDR4b2J4bTF4N3I0ZzM3NjExMXhxNnE2cSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/SqNWXTC1bozoOdhiIR/giphy.gif" alt="Angry Sticker" class="floating" style="height: 220px; margin: 20px 0;">
             <div class="btn-group"><button onclick="goTo(1)">TRY AGAIN</button></div>
         </div>
 
-        <!-- Screen 3: Excited -->
         <div class="screen" id="screen-3">
             <h1 class="title-serif" style="font-size: 50px;">Are you really excited?</h1>
             <img src="https://media.giphy.com/media/ZcthNRpghDfqieTcsm/giphy.gif" alt="Excited Sticker" class="floating" style="height: 220px; margin: 20px 0;">
@@ -279,7 +339,6 @@
             </div>
         </div>
 
-        <!-- Screen 4: Gifts -->
         <div class="screen" id="screen-4">
             <svg viewBox="0 0 600 120" style="width: 80%; height: auto; overflow: visible; margin-bottom: 20px;">
                 <path id="curve" d="M 0,110 Q 300,-10 600,110" fill="transparent"></path>
@@ -290,7 +349,7 @@
                 </text>
             </svg>
 
-            <div style="display: flex; gap: 40px; justify-content: center; align-items: center; position: relative; width: 150%; margin-bottom: 50px;">
+            <div style="display: flex; gap: 40px; justify-content: center; align-items: center; position: relative; width: 100%; margin-bottom: 50px;">
                 <img src="https://static.vecteezy.com/system/resources/previews/069/096/717/non_2x/modern-detailed-professional-high-quality-pink-gift-box-with-transparent-background-free-png.png" class="gift-img floating" onclick="goTo(6)" alt="Gift 1">
                 <img src="https://static.vecteezy.com/system/resources/previews/069/096/717/non_2x/modern-detailed-professional-high-quality-pink-gift-box-with-transparent-background-free-png.png" class="gift-img floating" style="animation-delay: 0.2s;" onclick="goTo(5)" alt="Gift 2">
                 <img src="https://static.vecteezy.com/system/resources/previews/069/096/717/non_2x/modern-detailed-professional-high-quality-pink-gift-box-with-transparent-background-free-png.png" class="gift-img floating" style="animation-delay: 0.4s;" onclick="goTo(7)" alt="Gift 3">
@@ -303,24 +362,18 @@
             <img src="https://media.tenor.com/-RYUs_Icgw4AAAAi/crayon-shin-chan-crayon-shin-chan-dance.gif" alt="Dancing Shinchan" class="s4-dancing-shinchan">
         </div>
 
-        <!-- ========================================================= -->
-        <!-- SCREEN 5: HAPPY RAKSHABANDHAN (Festive & Filled!)         -->
-        <!-- ========================================================= -->
         <div class="screen" id="screen-5">
             <div class="back-btn" onclick="goTo(4)">❮ Gifts</div>
             
-            <!-- Soft red watercolor background blobs -->
             <div class="s5-blob-tl"></div>
             <div class="s5-blob-br"></div>
 
-            <!-- Festive Floating Sparkles -->
             <div class="s5-sparkle" style="top: 15%; left: 45%; font-size: 35px; animation-delay: 0.1s;">✦</div>
             <div class="s5-sparkle" style="top: 25%; right: 45%; font-size: 20px; animation-delay: 0.5s;">★</div>
             <div class="s5-sparkle" style="bottom: 25%; left: 40%; font-size: 45px; animation-delay: 0.3s;">✨</div>
             <div class="s5-sparkle" style="bottom: 15%; left: 10%; font-size: 25px; animation-delay: 0.7s;">✦</div>
 
             <div class="s5-text-wrap">
-                <!-- Rakhi icon pushed up and out of the way -->
                 <img src="https://png.pngtree.com/png-clipart/20250102/original/pngtree-vector-illustration-of-decorative-rakhi-png-image_18634867.png" alt="Rakhi Icon" class="s5-rakhi floating">
                 
                 <h2 style="color: #A91B1B; font-family: 'Playfair Display'; font-size: 28px; margin-bottom: -15px; font-weight: 800; letter-spacing: 2px;">HAPPY</h2>
@@ -342,7 +395,6 @@
             <div class="heart-next" onclick="goTo(9)">more<br>></div>
         </div>
 
-        <!-- Screen 6: Best Sister -->
         <div class="screen" id="screen-6" style="padding: 40px;">
             <div class="back-btn" onclick="goTo(4)">❮ Gifts</div>
             <h1 class="title-serif" style="font-size: 55px; margin-top: 20px;">Best Sister Award</h1>
@@ -358,7 +410,6 @@
             <div class="heart-next" onclick="goTo(8)">more<br>></div>
         </div>
 
-        <!-- Screen 7: Memories -->
         <div class="screen" id="screen-7">
             <div class="back-btn" onclick="goTo(4)">❮ Gifts</div>
             
@@ -416,7 +467,6 @@
             <div class="s7-next-arrow" onclick="goTo(8)">❯</div>
         </div>
 
-        <!-- Screen 8: Mindmap -->
         <div class="screen" id="screen-8">
             <div class="back-btn" onclick="goTo(4)">❮ Gifts</div>
             <h1 class="title-serif" style="font-size: 45px; position: absolute; top: 10%; width: 100%;">YOU ARE MY</h1>
@@ -433,7 +483,6 @@
             <div class="heart-next" onclick="goTo(4)" style="width: 80px; background: #A91B1B; color: white;">Gifts<br>↺</div>
         </div>
 
-        <!-- Screen 9: Final -->
         <div class="screen" id="screen-9" style="padding: 40px; justify-content: space-between;">
             <div class="back-btn" onclick="goTo(4)">❮ Gifts</div>
             <h1 class="title-script" style="color: #A91B1B; font-size: 55px; margin-top: 40px;">To my forever best friend ❤️</h1>
